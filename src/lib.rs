@@ -156,11 +156,8 @@ fn handle_connection(mut conn: TcpStream, response: Option<&str>, port: u16) -> 
             );
             format!("<head>{}</head>{}", script, s)
         }
-        // None => format!(
-        //     "<html><head>{}</head><body>Please return to the app.</body></html>",
-        //     script
-        // ),
-        None => include_str!("oauth_callback.html").to_string(),
+        None => include_str!("oauth_callback.html")
+            .replace("<head>", &format!("<head>{}", script)),
     };
 
     // TODO: Test if unwrapping here is safe (enough).
